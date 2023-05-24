@@ -1,22 +1,21 @@
-package com.br.alura.domain.usuario;
+package com.br.alura.forum.domain.curso;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "cursos")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Curso {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private String email;
-	private String senha;
+	private String categoria;
 
 }

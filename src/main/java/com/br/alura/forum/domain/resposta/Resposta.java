@@ -1,7 +1,7 @@
-package com.br.alura.domain.resposta;
+package com.br.alura.forum.domain.resposta;
 
-import com.br.alura.domain.topico.Topico;
-import com.br.alura.domain.usuario.Usuario;
+import com.br.alura.forum.domain.topico.Topico;
+import com.br.alura.forum.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

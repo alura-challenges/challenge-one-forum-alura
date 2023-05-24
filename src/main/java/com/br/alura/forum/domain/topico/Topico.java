@@ -1,8 +1,8 @@
-package com.br.alura.domain.topico;
+package com.br.alura.forum.domain.topico;
 
-import com.br.alura.domain.curso.Curso;
-import com.br.alura.domain.resposta.Resposta;
-import com.br.alura.domain.usuario.Usuario;
+import com.br.alura.forum.domain.curso.Curso;
+import com.br.alura.forum.domain.resposta.Resposta;
+import com.br.alura.forum.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
