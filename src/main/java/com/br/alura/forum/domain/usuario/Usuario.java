@@ -3,7 +3,7 @@ package com.br.alura.forum.domain.usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "Usuario")
 @Table(name = "usuarios")
 @Getter
 @Setter
