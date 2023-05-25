@@ -30,16 +30,25 @@ public class Topico {
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
 	@ManyToOne
-	@JoinColumn(name = "autor_id")
+	@JoinColumn(name = "usuarios_id")
 	private Usuario autor;
 	@ManyToOne
-	@JoinColumn(name = "curso_id")
+	@JoinColumn(name = "cursos_id")
 	private Curso curso;
 
 	@OneToMany(mappedBy = "topico")
 	private List<Resposta> respostas = new ArrayList<>();
 
 
+	public Topico(DadosCadastroTopico dados) {
+		this.titulo = dados.titulo();
+		this.mensagem = dados.mensagem();
+		this.dataCriacao = dados.dataCriacao();
+		this.status = dados.status();
+		this.autor = dados.autor();
+		this.curso = dados.curso();
+		this.respostas = dados.respostas();
+	}
 }
 
 
