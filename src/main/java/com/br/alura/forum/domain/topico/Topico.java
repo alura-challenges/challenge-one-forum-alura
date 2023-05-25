@@ -41,15 +41,25 @@ public class Topico {
 	@OneToMany(mappedBy = "topico")
 	private List<Resposta> respostas = new ArrayList<>();
 
-
 	public Topico(DadosCadastroTopico dados) {
+		this.id = dados.id();
 		this.titulo = dados.titulo();
 		this.mensagem = dados.mensagem();
 		this.dataCriacao = dados.dataCriacao();
-		this.status = dados.status();
-		this.autor = dados.autor();
-		this.curso = dados.curso();
-		this.respostas = dados.respostas();
+	}
+
+
+	public void atualizarDados(DadosCadastroTopico dados) {
+		if(dados.titulo() != null){
+			this.titulo = dados.titulo();
+		}
+		if(dados.mensagem() != null){
+			this.titulo = dados.mensagem();
+		}
+		if(dados.dataCriacao() != null){
+			this.dataCriacao = dados.dataCriacao();
+		}
+
 	}
 }
 
