@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,9 @@ public class Topico {
 		this.titulo = dados.titulo();
 		this.mensagem = dados.mensagem();
 		this.dataCriacao = dados.dataCriacao();
+		this.status = dados.status();
+		this.autor = dados.autor();
+		this.curso = dados.curso();
 	}
 
 

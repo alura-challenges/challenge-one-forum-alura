@@ -1,0 +1,1 @@
+ALTER TABLE topicos MODIFY COLUMN status VARCHAR(50);
