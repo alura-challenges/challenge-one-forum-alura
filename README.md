@@ -42,6 +42,75 @@
 </br>
 </br>
 
+## Configuração de mensagem de erro Stacktrace
+
+<p>Foi usado uma configuração no application.properties para que não seja enviado ao cliente mensagem de erro stacktrace. Você pode conferir a documentação <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.server">aqui</a>.</p>
+
+<pre>
+<code>server.error.include-stacktrace=never</code>
+</pre>
+
+## Tratamento de Erros
+
+<p>O Bean Validation possui uma mensagem de erro para cada uma de suas anotações.</p>
+<p>Essas mensagens de erro não foram definidas na aplicação, pois são mensagens de erro padrão do próprio Bean Validation. Entretanto, existe a possibilidade de personalizar tais mensagens.</p>
+
+<p>Uma das maneiras de personalizar as mensagens de erro é adicionar o atributo message nas próprias anotações de validação:</p>
+
+<pre>
+     <code>
+          public record DadosCadastroTopico(
+          Long id,
+               @NotBlank(message = "O título é obrigatório")
+               String titulo,
+               @NotBlank(message = "É obrigatório descrever uma mensagem")
+               String mensagem,
+
+               @Column(name = "data_criacao")
+               LocalDateTime dataCriacao,
+
+               StatusTopico status,
+
+               Usuario autor,
+
+               Curso curso ) {
+
+               }
+     </code>
+</pre>
+
+<p>Outra maneira é isolar as mensagens em um arquivo de propriedades, que deve possuir o nome ValidationMessages.properties e ser criado no diretório src/main/resources:</p>
+
+<pre>
+     <code>
+     titulo.obrigatorio=O título é obrigatório.
+     mensagem.obrigatoria=É obrigatório descrever uma mensagem.
+     </code>
+</pre>
+
+<p>E, nas anotações, indicar a chave das propriedades pelo próprio atribuo "message", delimitando com os caracteres "{}":</p>
+
+<pre>
+     <code>
+          public record DadosCadastroTopico(
+               Long id,
+               @NotBlank(message = "{titulo.obrigatorio}")
+               String titulo,
+               @NotBlank(message = "{mensagem.obrigatoria}")
+               String mensagem,
+
+               @Column(name = "data_criacao")
+               LocalDateTime dataCriacao,
+
+               StatusTopico status,
+
+               Usuario autor,
+
+               Curso curso ) {
+
+               }
+     </code>
+</pre>
 
 # Responsável por este projeto:
 
