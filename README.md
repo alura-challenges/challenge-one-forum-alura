@@ -112,6 +112,20 @@
      </code>
 </pre>
 
+## Autenticação e Autorização
+
+<p>O Spring contém um módulo específico para tratar de segurança, conhecido como <strong>Spring Security</strong>.</p>
+<p>Um dos objetivos do Security é providenciar um serviço para customização de como será o controle de autenticação no projeto. Isto é, como os usuários efetuam login na aplicação.</p>
+<p>O Spring Security possui, também, a autorização, sendo o controle de acesso para liberação da requisição na API ou para efetuar um controle de permissão.</p>
+<p>Há, também, um mecanismo de proteção contra os principais ataques que ocorre em uma aplicação, como o CSRF (Cross Site Request Forgery) e o clickjacking.</p>
+
+## JWT - JSON Web Tokens
+
+<p>É usado no projeto o "JWT - JSON Web Tokens" como protocolo padrão para lidar com o gerenciamento dos tokens - geração e armazenamento de informações nos tokens.</p>
+<p>Para mais informações, acesse <a href="https://jwt.io/">aqui</a>.</p>
+<p>Existem diversas formas de se realizar o processo de autenticação e autorização em aplicações Web e APIs Rest. Você pode conferir <a href="https://www.alura.com.br/artigos/tipos-de-autenticacao">aqui</a>.</p>
+
+
 # Responsável por este projeto:
 
 Daniel Lincoln
