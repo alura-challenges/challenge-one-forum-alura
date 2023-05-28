@@ -2,6 +2,7 @@ package com.br.alura.forum.controller;
 
 import com.br.alura.forum.domain.usuario.DadosAutenticacao;
 import com.br.alura.forum.domain.usuario.Usuario;
+import com.br.alura.forum.infra.security.DadosTokenJwt;
 import com.br.alura.forum.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,10 @@ public class AutenticacaoController {
     private TokenService tokenService;
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
-        var authentication = manager.authenticate(token);
-        return ResponseEntity.ok(tokenService.geraToken((Usuario) authentication.getPrincipal()));
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+        var authentication = manager.authenticate(authenticationToken);
+        var tokenJWT = tokenService.geraToken((Usuario) authentication.getPrincipal());
+        return ResponseEntity.ok(new DadosTokenJwt(tokenJWT));
     }
 
 }
