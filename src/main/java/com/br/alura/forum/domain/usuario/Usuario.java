@@ -25,6 +25,14 @@ public class Usuario implements UserDetails {
 	private String email;
 	private String senha;
 
+	public Usuario(DadosCadastroUsuario dados) {
+		this.id = dados.id();
+		this.nome = dados.nome();
+		this.email = dados.email();
+		this.senha = dados.senha();
+	}
+
+
 	//para controle de perfis, precisa criar uma classe para isso e usa o metodo abaixo.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -59,5 +67,17 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public void atualizarDados(DadosCadastroUsuario dados) {
+		if(dados.nome() != null){
+			this.nome = dados.nome();
+		}
+		if(dados.email() != null){
+			this.email = dados.email();
+		}
+		if(dados.senha() != null){
+			this.senha = dados.senha();
+		}
 	}
 }

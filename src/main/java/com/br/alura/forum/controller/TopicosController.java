@@ -57,10 +57,6 @@ public class TopicosController {
     public ResponseEntity atualizar(@RequestBody @Valid DadosCadastroTopico dados){
         var topico = topicoRepository.getReferenceById(dados.id());
         topico.atualizarDados(dados);
-
-        //Não é boa prática devolver uma entidade JPA.
-        // Precisa devolver todos os dados do médico.
-        // Para isso, precisa de um DTO específico para isso.
         return ResponseEntity.ok(new DadosDetalhesTopico(topico));
     }
 
