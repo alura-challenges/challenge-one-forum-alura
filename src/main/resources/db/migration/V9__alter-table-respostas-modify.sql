@@ -1,0 +1,5 @@
+ALTER TABLE respostas MODIFY COLUMN mensagem VARCHAR(255);
+ALTER TABLE respostas MODIFY COLUMN topico VARCHAR(50);
+ALTER TABLE respostas MODIFY COLUMN data_criacao VARCHAR(100);
+ALTER TABLE respostas MODIFY COLUMN autor VARCHAR(100);
+ALTER TABLE respostas MODIFY COLUMN solucao tinyint;

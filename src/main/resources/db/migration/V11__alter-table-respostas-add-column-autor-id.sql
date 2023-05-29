@@ -1,0 +1,1 @@
+ALTER TABLE respostas ADD COLUMN autor_id BIGINT;
