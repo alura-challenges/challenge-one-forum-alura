@@ -5,6 +5,7 @@ import com.br.alura.forum.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 public class Resposta {
 
 	@Id
@@ -32,4 +34,11 @@ public class Resposta {
 	private Usuario autor;
 	private Boolean solucao = false;
 
+	public Resposta(DadosResposta dados) {
+		this.id = dados.id();
+		this.mensagem = dados.mensagem();
+		this.topico = dados.topico();
+		this.dataCriacao = dados.dataCriacao();
+		this.autor = dados.autor();
+	}
 }

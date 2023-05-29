@@ -42,6 +42,18 @@
 </br>
 </br>
 
+# Funcionalidades
+<p>Este projeto se refere-se a uma API de fórum, onde cada usuário através de login, pode postar um tópico no fórum e  responder tópicos. Os dados são armazenados em banco de dados.</p>
+
+# Outras implementações
+<p>Implementação de outras rotas do aplicativo:</p>
+"/usuarios"
+</br>
+"/respostas
+</br></br>
+
+
+
 ## Configuração de mensagem de erro Stacktrace
 
 <p>Foi usado uma configuração no application.properties para que não seja enviado ao cliente mensagem de erro stacktrace. Você pode conferir a documentação <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.server">aqui</a>.</p>
@@ -222,9 +234,9 @@
 
 <p>Para mais detalhes sobre o recurso de method security na documentação do Spring Security, disponível <a href="https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html"> aqui </a>.</p>
 
-# Responsável por este projeto:
+# Colaborador:
 
-Daniel Lincoln
+<strong>Daniel Lincoln</strong>
 
 [![img](https://camo.githubusercontent.com/c00f87aeebbec37f3ee0857cc4c20b21fefde8a96caf4744383ebfe44a47fe3f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4c696e6b6564496e2d2532333030373742353f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465)](https://www.linkedin.com/in/daniellincolndev/)
 
