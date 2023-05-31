@@ -11,14 +11,14 @@ public record DadosDetalhesResposta(
         Long id,
         @NotBlank(message = "A mensagem é obrigatória")
         String mensagem,
-        Topico topico,
+        Long topico,
         LocalDateTime dataCriacao,
         Usuario autor,
         Boolean solucao) {
 
 
     public DadosDetalhesResposta(Resposta resposta) {
-        this(resposta.getId(), resposta.getMensagem(), resposta.getTopico(), resposta.getDataCriacao(), resposta.getAutor(), resposta.getSolucao());
+        this(resposta.getId(), resposta.getMensagem(), resposta.getTopico().getId(), resposta.getDataCriacao(), resposta.getAutor(), resposta.getSolucao());
     }
 
 }

@@ -65,6 +65,12 @@ public class Topico {
 		}
 
 	}
+
+	public void adicionarResposta(Resposta resposta){
+		if(!this.respostas.contains(resposta)){
+			this.respostas.add(resposta);
+		}
+	}
 }
 
 

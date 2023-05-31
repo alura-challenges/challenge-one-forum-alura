@@ -9,7 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record DadosDetalhesTopico(Long id, String titulo, String mensagem, LocalDateTime dataCriacao, StatusTopico status, Usuario usuario, Curso curso, List<DadosResposta> respostas) {
+public record DadosDetalhesTopico(
+        Long id,
+        String titulo,
+        String mensagem,
+        LocalDateTime dataCriacao,
+        StatusTopico status,
+        Usuario usuario,
+        Curso curso,
+        List<DadosResposta> respostas) {
 
     public DadosDetalhesTopico(Topico topico){
         this(topico.getId(), topico.getTitulo(), topico.getMensagem(), topico.getDataCriacao(), topico.getStatus(), topico.getAutor(), topico.getCurso(),

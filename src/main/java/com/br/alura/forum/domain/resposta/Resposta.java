@@ -2,6 +2,7 @@ package com.br.alura.forum.domain.resposta;
 
 import com.br.alura.forum.domain.topico.Topico;
 import com.br.alura.forum.domain.usuario.Usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class Resposta {
 	private String mensagem;
 	@ManyToOne
 	@JoinColumn(name = "topico_id")
+	@JsonIgnore
 	private Topico topico;
 
 	@Column(name = "data_criacao")
