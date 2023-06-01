@@ -42,5 +42,12 @@ public class Resposta {
 		this.topico = dados.topico();
 		this.dataCriacao = dados.dataCriacao();
 		this.autor = dados.autor();
+		this.solucao = dados.solucao();
+	}
+
+	public void atualizar(DadosAtualizaResposta dados) {
+		if(dados.mensagem()!= null){
+			this.mensagem = dados.mensagem();
+		}
 	}
 }

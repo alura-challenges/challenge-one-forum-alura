@@ -20,6 +20,9 @@ public class TopicosController {
     @Autowired
     private TopicoRepository topicoRepository;
 
+    @Autowired
+    private TopicoService service;
+
 
     /**
      * Conforme o protocolo HTTP, ao cadastrarmos uma informação ou recurso em uma API,
@@ -37,12 +40,8 @@ public class TopicosController {
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroTopico dados, UriComponentsBuilder builder){
         var topico = new Topico(dados);
-        topico.setDataCriacao(LocalDateTime.now());
-        topico.setStatus(StatusTopico.NAO_RESPONDIDO);
-        topicoRepository.save(topico);
-
+        service.salvar(topico);
         var uri = builder.path("topicos/{id}").buildAndExpand(topico.getId()).toUri();
-
         return ResponseEntity.created(uri).body(new DadosDetalhesTopico(topico));
     }
 
@@ -55,22 +54,30 @@ public class TopicosController {
     @PutMapping
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid DadosCadastroTopico dados){
-        var topico = topicoRepository.getReferenceById(dados.id());
-        topico.atualizarDados(dados);
+        Topico topico = service.atualizar(dados);
         return ResponseEntity.ok(new DadosDetalhesTopico(topico));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity excluir(@PathVariable Long id){
-            topicoRepository.deleteById(id);
-            return ResponseEntity.noContent().build();
+
+        var topico = topicoRepository.getReferenceById(id);
+        service.excluir(topico); //exclusão lógica
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity detalhar(@PathVariable Long id){
         Topico topico = topicoRepository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhesTopico(topico));
+    }
+
+    @PutMapping("/fechar")
+    @Transactional
+    public ResponseEntity<?> fechar(@RequestBody @Valid DadosDetalhesTopico dados){
+        service.fecharTopico(dados);
+        return ResponseEntity.noContent().build();
     }
 
 }

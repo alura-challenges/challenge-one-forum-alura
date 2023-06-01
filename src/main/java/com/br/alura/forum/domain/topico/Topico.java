@@ -58,7 +58,7 @@ public class Topico {
 			this.titulo = dados.titulo();
 		}
 		if(dados.mensagem() != null){
-			this.titulo = dados.mensagem();
+			this.mensagem = dados.mensagem();
 		}
 		if(dados.dataCriacao() != null){
 			this.dataCriacao = dados.dataCriacao();
@@ -70,6 +70,10 @@ public class Topico {
 		if(!this.respostas.contains(resposta)){
 			this.respostas.add(resposta);
 		}
+	}
+
+	public void excluir() {
+		this.status = StatusTopico.FECHADO;
 	}
 }
 
