@@ -1,0 +1,4 @@
+UPDATE usuarios SET senha = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWlsQHRlc3RlLmNvbS5iciIsInNlbmhhIjoiMTIzNDU2In0.RaWKciyrR0Z8snULcVtuVDGGnYcsqD8f6pCReXF-jTA" WHERE id = 1;
+UPDATE usuarios SET senha = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hcmlhLmRlYm9yYUB0ZXN0ZS5jb20uYnIiLCJzZW5oYSI6Ijk5ODg3NyJ9.AH9EshfqdN4Fu3ctrfY7ECnPKJuuQq-iKpgI1qS-BjQ" WHERE id = 2;
+UPDATE usuarios SET senha = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBlZHJvLmFudG9uaW9AdGVzdGUuY29tLmJyIiwic2VuaGEiOiI0NDY2NTUifQ.wdJjeiz6SEdxMRiUnmDTdWL3jyuTXucW6dBNaATx200" WHERE id = 3;
+UPDATE usuarios SET senha = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InBhdWxvLmpyQHRlc3RlLmNvbS5iciIsInNlbmhhIjoiOTU5NTk1In0.04559eHqxO1-x5pYFjlONY-PosucpKzRAZ9Tn771-z4" WHERE id = 4;

@@ -4,129 +4,239 @@
      <img width="200" heigth="200" src="https://user-images.githubusercontent.com/78982435/209698701-28dedb2e-855b-44b2-8872-afa45e3b35aa.png">
 </p>
 
-## Nossas boas-vindas ao projeto base Fórum Alura com Java e Spring! 
-
-### Passos fundamentais:
-
-#### ⭐ Marque este projeto com uma estrela 
-
-#### 📚 Siga as instruções das aulas e conteúdos 
+## Minhas boas-vindas ao projeto Fórum Alura com Java e Spring! 
 
 #### 📃<u>*Visite a página do Challenge [Clicando aqui!](https://www.alura.com.br/challenges/oracle-one-back-end/aluraforum)*</u> 
 
 
-
 ### Tecnologias utilizadas:
 
-- [Eclipse](https://www.eclipse.org/)
+- [IntellijIDEA](https://www.jetbrains.com/idea/)
 - [MySql](https://www.mysql.com/)
 - [Java](https://www.java.com/pt-BR/)
 - [Spring Security](https://start.spring.io/)
 - [Token JWT](https://jwt.io/)
+- [Isomnia](https://insomnia.rest/download)
+
+</br>
+
+# Sobre o Projeto
+
+<p>Neste projeto foi feita as implementações por etapas, onde a primeira etapa tinha como objetivos:</p>
+
+<ul>
+     <li>Desenvolvimento de API Rest;</li>
+     <li>CRUD (Create, Read, Update, e Delete);</li>
+     <li>Validações;</li>
+     <li>Paginação e ordenação.</li>
+</ul>
+
+<p>A segunda etapa foquei em novos objetivos, a seguir:</p>
+<ul>
+     <li>Boas práticas na API;</li>
+     <li>Tratamento de erros;</li>
+     <li>Autenticação/Autorização;</li>
+     <li>Tokens JWT.</li>
+</ul>
+
+</br>
+</br>
+
+# Funcionalidades
+<p>Este projeto se refere-se a uma API de fórum, onde cada usuário através de login, pode postar um tópico no fórum e  responder tópicos. Os dados são armazenados em banco de dados.</p>
+
+# Outras implementações
+<p>Implementação de outras rotas do aplicativo:</p>
+"/usuarios"
+</br>
+"/respostas
+</br></br>
 
 
 
-## ⬇️ Download
+## Configuração de mensagem de erro Stacktrace
 
-### Como fazer o download:
+<p>Foi usado uma configuração no application.properties para que não seja enviado ao cliente mensagem de erro stacktrace. Você pode conferir a documentação <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#appendix.application-properties.server">aqui</a>.</p>
 
-#### 🔹 Fork
+<pre>
+<code>server.error.include-stacktrace=never</code>
+</pre>
 
-1. Faça o **fork** do projeto. No lado superior direito, ao clicar no ícone ele criará um repositório do projeto em sua conta pessoal do GitHub.
+## Tratamento de Erros
 
-   <p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/101413385/169404781-7df6355b-3a15-472a-8d8e-fdb84d91a7bd.png">
-</p>
+<p>O Bean Validation possui uma mensagem de erro para cada uma de suas anotações.</p>
+<p>Essas mensagens de erro não foram definidas na aplicação, pois são mensagens de erro padrão do próprio Bean Validation. Entretanto, existe a possibilidade de personalizar tais mensagens.</p>
 
-2. Após ter o repositório "forkado" para sua conta, verifica se a url da página é a do repositório da sua conta.
+<p>Uma das maneiras de personalizar as mensagens de erro é adicionar o atributo message nas próprias anotações de validação:</p>
 
-  <p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/78982435/209683304-04e0d114-8834-4449-b82b-29a38f057f2d.png">
-</p>
+<pre>
+     <code>
+          public record DadosCadastroTopico(
+          Long id,
+               @NotBlank(message = "O título é obrigatório")
+               String titulo,
+               @NotBlank(message = "É obrigatório descrever uma mensagem")
+               String mensagem,
 
-3. Clique na opção **Code**. Ele apresentará três formas para instalar o repositório em sua máquina, e destacamos duas:
+               @Column(name = "data_criacao")
+               LocalDateTime dataCriacao,
 
-    <p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/78982435/209683480-72fab313-ecbc-4de7-8f75-2d6b5013ea49.png">
-     </p></br>
+               StatusTopico status,
+
+               Usuario autor,
+
+               Curso curso ) {
+
+               }
+     </code>
+</pre>
+
+<p>Outra maneira é isolar as mensagens em um arquivo de propriedades, que deve possuir o nome ValidationMessages.properties e ser criado no diretório src/main/resources:</p>
+
+<pre>
+     <code>
+     titulo.obrigatorio=O título é obrigatório.
+     mensagem.obrigatoria=É obrigatório descrever uma mensagem.
+     </code>
+</pre>
+
+<p>E, nas anotações, indicar a chave das propriedades pelo próprio atribuo "message", delimitando com os caracteres "{}":</p>
+
+<pre>
+     <code>
+          public record DadosCadastroTopico(
+               Long id,
+               @NotBlank(message = "{titulo.obrigatorio}")
+               String titulo,
+               @NotBlank(message = "{mensagem.obrigatoria}")
+               String mensagem,
+
+               @Column(name = "data_criacao")
+               LocalDateTime dataCriacao,
+
+               StatusTopico status,
+
+               Usuario autor,
+
+               Curso curso ) {
+
+               }
+     </code>
+</pre>
+
+## Autenticação e Autorização
+
+<p>O Spring contém um módulo específico para tratar de segurança, conhecido como <strong>Spring Security</strong>.</p>
+<p>Um dos objetivos do Security é providenciar um serviço para customização de como será o controle de autenticação no projeto. Isto é, como os usuários efetuam login na aplicação.</p>
+<p>O Spring Security possui, também, a autorização, sendo o controle de acesso para liberação da requisição na API ou para efetuar um controle de permissão.</p>
+<p>Há, também, um mecanismo de proteção contra os principais ataques que ocorre em uma aplicação, como o CSRF (Cross Site Request Forgery) e o clickjacking.</p>
+
+## JWT - JSON Web Tokens
+
+<p>É usado no projeto o "JWT - JSON Web Tokens" como protocolo padrão para lidar com o gerenciamento dos tokens - geração e armazenamento de informações nos tokens.</p>
+<p>Para mais informações, acesse <a href="https://jwt.io/">aqui</a>.</p>
+<p>Existem diversas formas de se realizar o processo de autenticação e autorização em aplicações Web e APIs Rest. Você pode conferir <a href="https://www.alura.com.br/artigos/tipos-de-autenticacao">aqui</a>.</p>
+
+## Sobre Filters
+
+<p>Filter é um dos recursos que fazem parte da especificação de Servlets, a qual padroniza o tratamento de requisições e respostas em aplicações Web no Java. Ou seja, tal recurso não é específico do Spring, podendo assim ser utilizado em qualquer aplicação Java.</p>
+<p>É um recurso muito útil para isolar códigos de infraestrutura da aplicação, como, por exemplo, segurança, logs e auditoria, para que tais códigos não sejam duplicados e misturados aos códigos relacionados às regras de negócio da aplicação.</p>
+<p>Para criar um Filter, basta criar uma classe e implementar nela a interface Filter (pacote jakarta.servlet). Por exemplo:</p>
+
+<pre>
+     <code>
+          @WebFilter(urlPatterns = "/api/**")
+          public class LogFilter implements Filter {
+
+          @Override
+          public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+               System.out.println("Requisição recebida em: " + LocalDateTime.now());
+               filterChain.doFilter(servletRequest, servletResponse);
+          }
+
+          }
+     </code>
+</pre>
+
+<p>O método doFilter é chamado pelo servidor automaticamente, sempre que esse filter tiver que ser executado, e a chamada ao método filterChain.doFilter indica que os próximos filters, caso existam outros, podem ser executados. A anotação @WebFilter, adicionada na classe, indica ao servidor em quais requisições esse filter deve ser chamado, baseando-se na URL da requisição.</p>
+
+<p>Neste projeto, foi utilizado outra maneira de implementar um filter, usando recursos do Spring.</p>
+
+## Mudanças na versão 3.1
+
+<p>A partir da versão 3.1 do Spring Boot algumas mudanças foram realizadas, em relação às configurações de segurança. Caso você esteja utilizando o Spring Boot nessa versão, ou em versões posteriores, o código neste projeto pode apresentar um aviso de deprecated, por conta de tais mudanças.</p>
+<p>A partir dessa versão, o método securityFilterChain deve ser alterado para:</p>
+
+<code>
+     <pre>
+     @Bean
+     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+     return http.csrf(csrf -> csrf.disable())
+               .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+               .authorizeHttpRequests(req -> {
+                    req.requestMatchers(HttpMethod.POST, "/login").permitAll();
+                    req.anyRequest().authenticated();
+               })
+               .addFilterBefore(new UsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+               .build();
+     }
+     </pre>
+</code>
+
+## Controle de acesso por url
+
+<p>Na aplicação utilizada, não tem perfis de acessos distintos para os usuários. Entretanto, esse recurso é utilizado em algumas aplicações e podemos indicar ao Spring Security que determinadas URLs somente podem ser acessadas por usuários que possuem um perfil específico.</p>
+<p>Por exemplo, suponha que em na aplicação tenha um perfil de acesso chamado de ADMIN, sendo que somente usuários com esse perfil possam excluir tópicos e cursos. Podemos indicar ao Spring Security tal configuração alterando o método securityFilterChain, na classe SecurityConfigurations, da seguinte maneira:</p>
+
+<code>
+     <pre>
+          @Bean
+          public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+          return http.csrf().disable()
+               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+               .and().authorizeHttpRequests()
+               .requestMatchers(HttpMethod.POST, "/login").permitAll()
+               .requestMatchers(HttpMethod.DELETE, "/topicos").hasRole("ADMIN")
+               .requestMatchers(HttpMethod.DELETE, "/cursos").hasRole("ADMIN")
+               .anyRequest().authenticated()
+               .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+               .build();
+          }
+     </pre>
+</code>
+
+<p>Observa-se que no código anterior foram adicionadas duas linhas, indicando ao Spring Security que as requisições do tipo DELETE para as URLs /topicos e /cursos somente podem ser executadas por usuários autenticados e cujo perfil de acesso seja ADMIN.</p>
+
+## Controle de acesso por anotações
+
+<p>Outra maneira de restringir o acesso a determinadas funcionalidades, com base no perfil dos usuários, é com a utilização de um recurso do Spring Security conhecido como Method Security, que funciona com a utilização de anotações em métodos:</p>
 
 
-   #### 🔹 Clonar ou baixar o ZIP
+<code>
+     <pre>
+          @GetMapping("/{id}")
+          @Secured("ROLE_ADMIN")
+          public ResponseEntity detalhar(@PathVariable Long id) {
+          var topico = repository.getReferenceById(id);
+          return ResponseEntity.ok(new DadosDetalhamentoTopico(topico));
+          }
+     </pre>
+</code>
 
-   1. Para clonar, basta copiar a *url* destacada na imagem e localizada logo abaixo do HTTPS, criar uma pasta em seu computador, abrir o *cmd* ou o *git bash* dentro dessa pasta e em seguida insira o comando **git clone** e com o botão direito do mouse dentro do terminal clicar na opção **Paste** para colar a *url* e dar *Enter*.
+<p>No exemplo de código anterior o método foi anotado com @Secured("ROLE_ADMIN"), para que apenas usuários com o perfil ADMIN possam disparar requisições para detalhar um topico. A anotação @Secured pode ser adicionada em métodos individuais ou mesmo na classe, que seria o equivalente a adicioná-la em todos os métodos.</p>
+<p>Atenção! Por padrão esse recurso vem desabilitado no spring Security, sendo que para o utilizar deve adicionar a seguinte anotação na classe Securityconfigurations do projeto:</p>
 
-     <p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/78982435/209683774-85c78b5e-605f-4643-818f-0bb2eddca175.png">
-</p>
+<code>
+     <pre>
+          @EnableMethodSecurity(securedEnabled = true)
+     </pre>
+</code>
 
-   2. A segunda opção é baixar o código em um pacote **"zipado"** e extrair a pasta para o seu computador.
+<p>Para mais detalhes sobre o recurso de method security na documentação do Spring Security, disponível <a href="https://docs.spring.io/spring-security/reference/servlet/authorization/method-security.html"> aqui </a>.</p>
 
-## 📝 Eclipse
+# Colaborador:
 
-### Como importar o meu projeto no Eclipse?
+<strong>Daniel Lincoln</strong>
 
-1. Uma vez dentro do Editor do lado esquerdo, clique em *File* que está no menu na parte superior, escolha a opção *Open Projects from File System*.
+[![img](https://camo.githubusercontent.com/c00f87aeebbec37f3ee0857cc4c20b21fefde8a96caf4744383ebfe44a47fe3f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4c696e6b6564496e2d2532333030373742353f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465)](https://www.linkedin.com/in/daniellincolndev/)
 
-   <p align="center" >
-     <img width="400" heigth="400" src="https://user-images.githubusercontent.com/101413385/173164237-1db32d79-2b35-433f-817c-ec3fa30899fc.png">
-</p>
-
-   Em seguida, clique em *Directory* e localize o diretório do projeto "clonado" ou "extraído" em seu computador. Clique em *Finish* para concluir a importação.
-
-   <p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/78982435/209683881-aa94b361-d63e-4d78-b5db-d5215b350efa.png">
-</p>
-
-2. A segunda forma de importar está em *File* na opção *Import*. Ou através do **Project Explorer**, clique no campo vazio com o botão direito do mouse e escolha a opção *Import*.
-
-   <p align="center" >
-     <img width="400" heigth="400" src="https://user-images.githubusercontent.com/101413385/173111357-2ec928ac-5a3d-4f7c-ba84-8906d84bfd08.png">
-</p>
-
-<p align="center" >
-     <img width="400" heigth="400" src="https://user-images.githubusercontent.com/101413385/169431325-23a2e3cb-85a3-4298-8e60-64dfa58e2e6f.png">
-</p>
-
-   Se optar pelo **Import**, abrirá a janela correspondente, clique na opção *Existing Projects Into Workspace* e no botão *Next*.
-
-   <p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/101413385/169431890-27f40955-27d8-4b4d-82df-d3507f85de6c.png">
-</p>
-
-Em seguida, clique no botão <em>Browse</em> e busque o projeto no diretório local.
-
-<p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/78982435/209683946-24a7a3c1-8170-4280-8047-5eb70cba7a9b.png">
-</p>
-   
-
-## 🚧Como listar o meu projeto neste Challenge?
-
-1. Publique seu projeto no GitHub;
-2. Utilize o tópico:
-   - Turma 4: **challengeforumalura4**;
-   - Vá na aba "`Sobre`" ou "`About`" do seu projeto, no menu lateral que fica na esquerda, dentro do repositório no GitHub e Adicione a tag "**challengeforumalura4**".
-
-![11 gif - github](https://user-images.githubusercontent.com/78982435/209682261-a06b735c-0752-48ad-bbd3-5784e4f6d7ef.gif)
-
-## 📬Como realizar a entrega final do meu projeto?
-
-1. Preencha o formulário de entrega com o **link do projeto publicado com GitHub Pages** 
-
-   🔹 [Link para o formulário](https://lp.alura.com.br/alura-latam-entrega-challenge-one-portugues-back-end)
-
-   <p align="center" >
-     <img width="700" heigth="700" src="https://user-images.githubusercontent.com/91544872/218554361-c5fa616a-3232-4a21-998c-3b03fb7a0c8c.png">
-</p>
-
-2. Acesse seu e-mail e terá a sua Badge Exclusiva do Desafio 🏆
-
-3. Não se esqueça de publicar um link ou vídeo do seu projeto no [Linkedin](https://www.linkedin.com/company/alura-latam/mycompany/)! 🏁
-
-💙 Alura Latam
-
-[![img](https://camo.githubusercontent.com/c00f87aeebbec37f3ee0857cc4c20b21fefde8a96caf4744383ebfe44a47fe3f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4c696e6b6564496e2d2532333030373742353f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465)](https://www.linkedin.com/company/alura-latam/mycompany/)
-
-🧡 Oracle
-
-[![img](https://camo.githubusercontent.com/c00f87aeebbec37f3ee0857cc4c20b21fefde8a96caf4744383ebfe44a47fe3f/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f2d4c696e6b6564496e2d2532333030373742353f7374796c653d666f722d7468652d6261646765266c6f676f3d6c696e6b6564696e266c6f676f436f6c6f723d7768697465)](https://www.linkedin.com/company/oracle/)
