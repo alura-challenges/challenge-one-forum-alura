@@ -1,7 +1,17 @@
-package com.br.alura.modelo;
+package com.br.alura.forum.modelo;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@Entity(name = "Curso")
+@Table(name = "cursos")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Curso {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String categoria;

@@ -1,19 +1,31 @@
-package com.br.alura.modelo;
+package com.br.alura.forum.modelo;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity(name = "Topico")
+@Table(name = "topicos")
 public class Topico {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String titulo;
 	private String mensagem;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
+	@Enumerated(value = EnumType.STRING)
 	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+	@ManyToOne
+	@JoinColumn(name = "autor_id")
 	private Usuario autor;
+	@ManyToOne
+	@JoinColumn(name = "curso_id")
 	private Curso curso;
-	private List<Resposta> respostas = new ArrayList<>();
+//	private List<Resposta> respostas = new ArrayList<>();
 
 	public Topico(String titulo, String mensagem, Curso curso) {
 		this.titulo = titulo;
@@ -102,12 +114,12 @@ public class Topico {
 		this.curso = curso;
 	}
 
-	public List<Resposta> getRespostas() {
-		return respostas;
-	}
+//	public List<Resposta> getRespostas() {
+//		return respostas;
+//	}
 
-	public void setRespostas(List<Resposta> respostas) {
-		this.respostas = respostas;
-	}
+//	public void setRespostas(List<Resposta> respostas) {
+//		this.respostas = respostas;
+//	}
 
 }

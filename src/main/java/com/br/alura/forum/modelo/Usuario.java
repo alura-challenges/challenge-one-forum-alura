@@ -1,7 +1,13 @@
-package com.br.alura.modelo;
+package com.br.alura.forum.modelo;
 
+import jakarta.persistence.*;
+
+@Entity(name = "Usuario")
+@Table(name = "usuarios")
 public class Usuario {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
 	private String email;
