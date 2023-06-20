@@ -89,9 +89,6 @@ public class Curso {
 		if (dadosAtualizacaoCurso.categoria() != null){
 			this.categoria = dadosAtualizacaoCurso.categoria();
 		}
-		if (dadosAtualizacaoCurso.ativo() != this.ativo){
-			this.ativo = dadosAtualizacaoCurso.ativo();
-		}
 	}
 
 	public void excluir(){

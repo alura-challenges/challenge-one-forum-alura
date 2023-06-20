@@ -1,9 +1,13 @@
 package com.br.alura.forum.domain.usuario;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity(name = "Usuario")
 @Table(name = "usuarios")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
 
 	@Id
@@ -12,6 +16,15 @@ public class Usuario {
 	private String nome;
 	private String email;
 	private String senha;
+	private boolean ativo;
+
+	public Usuario(DadosCadastroUsuario dadosCadastroUsuario) {
+		this.nome = dadosCadastroUsuario.nome();
+		this.email = dadosCadastroUsuario.email();
+		this.senha = dadosCadastroUsuario.senha();
+		this.ativo = true;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -70,4 +83,21 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public void atualizar(DadosAtualizacaoUsuario dadosAtualizacaoUsuario){
+		if (dadosAtualizacaoUsuario.nome() != null){
+			this.nome = dadosAtualizacaoUsuario.nome();
+		}
+	}
+
+	public void excluir() {
+		this.ativo = false;
+	}
 }

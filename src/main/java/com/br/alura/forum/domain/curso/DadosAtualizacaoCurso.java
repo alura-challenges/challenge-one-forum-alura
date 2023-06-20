@@ -6,6 +6,5 @@ public record DadosAtualizacaoCurso(
         @NotNull
         Long id,
         String nome,
-        String categoria,
-        boolean ativo) {
+        String categoria) {
 }
