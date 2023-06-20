@@ -2,6 +2,7 @@ package com.br.alura.forum.controller;
 
 import com.br.alura.forum.domain.curso.*;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,7 @@ public class CursoController {
     private CursoRepository cursoRepository;
     @PostMapping
     @Transactional
-    public ResponseEntity<DadosDetalhamentoCurso> cadastrar(@RequestBody DadosCadastroCurso dadosCadastroCurso, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DadosDetalhamentoCurso> cadastrar(@RequestBody @Valid DadosCadastroCurso dadosCadastroCurso, UriComponentsBuilder uriBuilder){
         var curso = new Curso(dadosCadastroCurso);
         cursoRepository.save(curso);
         var uri = uriBuilder.path("cursos/{id}").buildAndExpand(curso.getId()).toUri();
@@ -29,7 +30,7 @@ public class CursoController {
 
     @GetMapping
     public ResponseEntity<Page<DadosDetalhamentoCurso>> listar(@PageableDefault(page = 0, size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao){
-        var cursos = cursoRepository.findAll(paginacao).map(DadosDetalhamentoCurso::new);
+        var cursos = cursoRepository.findAllByAtivoTrue(paginacao).map(DadosDetalhamentoCurso::new);
         return ResponseEntity.ok(cursos);
     }
 
@@ -41,7 +42,7 @@ public class CursoController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity<DadosDetalhamentoCurso> atualizar(@RequestBody DadosAtualizacaoCurso dadosAtualizacaoCurso){
+    public ResponseEntity<DadosDetalhamentoCurso> atualizar(@RequestBody @Valid DadosAtualizacaoCurso dadosAtualizacaoCurso){
         var curso = cursoRepository.getReferenceById(dadosAtualizacaoCurso.id());
         curso.atualizar(dadosAtualizacaoCurso);
         return ResponseEntity.ok(new DadosDetalhamentoCurso(curso));
@@ -50,7 +51,8 @@ public class CursoController {
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity deletar(@PathVariable Long id){
-        cursoRepository.deleteById(id);
+        var curso = cursoRepository.getReferenceById(id);
+        curso.excluir();
         return ResponseEntity.noContent().build();
     }
 

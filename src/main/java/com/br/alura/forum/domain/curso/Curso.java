@@ -17,10 +17,12 @@ public class Curso {
 	private Long id;
 	private String nome;
 	private String categoria;
+	private boolean ativo;
 
 	public Curso(DadosCadastroCurso dadosCadastroCurso) {
 		this.nome = dadosCadastroCurso.nome();
 		this.categoria = dadosCadastroCurso.categoria();
+		this.ativo = true;
 	}
 	
 	@Override
@@ -72,6 +74,14 @@ public class Curso {
 		this.categoria = categoria;
 	}
 
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
 	public void atualizar(DadosAtualizacaoCurso dadosAtualizacaoCurso){
 		if(dadosAtualizacaoCurso.nome() != null){
 			this.nome = dadosAtualizacaoCurso.nome();
@@ -79,5 +89,12 @@ public class Curso {
 		if (dadosAtualizacaoCurso.categoria() != null){
 			this.categoria = dadosAtualizacaoCurso.categoria();
 		}
+		if (dadosAtualizacaoCurso.ativo() != this.ativo){
+			this.ativo = dadosAtualizacaoCurso.ativo();
+		}
+	}
+
+	public void excluir(){
+		this.ativo = false;
 	}
 }
