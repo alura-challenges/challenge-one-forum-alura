@@ -1,6 +1,6 @@
-package com.br.alura.forum.repository;
+package com.br.alura.forum.domain.usuario;
 
-import com.br.alura.forum.modelo.Usuario;
+import com.br.alura.forum.domain.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

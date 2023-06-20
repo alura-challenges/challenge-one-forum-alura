@@ -1,5 +1,8 @@
 package com.br.alura.forum.modelo;
 
+import com.br.alura.forum.domain.topico.Topico;
+import com.br.alura.forum.domain.usuario.Usuario;
+
 import java.time.LocalDateTime;
 
 public class Resposta {

@@ -1,12 +1,12 @@
-package com.br.alura.forum.modelo;
+package com.br.alura.forum.domain.topico;
 
+import com.br.alura.forum.domain.curso.Curso;
+import com.br.alura.forum.modelo.StatusTopico;
+import com.br.alura.forum.domain.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 @Entity(name = "Topico")
 @Table(name = "topicos")
 public class Topico {

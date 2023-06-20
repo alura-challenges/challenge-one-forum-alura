@@ -1,6 +1,5 @@
-package com.br.alura.forum.repository;
+package com.br.alura.forum.domain.curso;
 
-import com.br.alura.forum.modelo.Curso;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

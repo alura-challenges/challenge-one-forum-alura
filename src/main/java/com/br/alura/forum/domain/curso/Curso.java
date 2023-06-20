@@ -1,8 +1,10 @@
-package com.br.alura.forum.modelo;
+package com.br.alura.forum.domain.curso;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 @Entity(name = "Curso")
 @Table(name = "cursos")
@@ -16,9 +18,9 @@ public class Curso {
 	private String nome;
 	private String categoria;
 
-	public Curso(String nome, String categoria) {
-		this.nome = nome;
-		this.categoria = categoria;
+	public Curso(DadosCadastroCurso dadosCadastroCurso) {
+		this.nome = dadosCadastroCurso.nome();
+		this.categoria = dadosCadastroCurso.categoria();
 	}
 	
 	@Override
@@ -70,4 +72,12 @@ public class Curso {
 		this.categoria = categoria;
 	}
 
+	public void atualizar(DadosAtualizacaoCurso dadosAtualizacaoCurso){
+		if(dadosAtualizacaoCurso.nome() != null){
+			this.nome = dadosAtualizacaoCurso.nome();
+		}
+		if (dadosAtualizacaoCurso.categoria() != null){
+			this.categoria = dadosAtualizacaoCurso.categoria();
+		}
+	}
 }
