@@ -29,8 +29,8 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosDetalhamentoCurso>> listar(@PageableDefault(page = 0, size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao){
-        var cursos = cursoRepository.findAllByAtivoTrue(paginacao).map(DadosDetalhamentoCurso::new);
+    public ResponseEntity<Page<DadosListagemCursos>> listar(@PageableDefault(page = 0, size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao){
+        var cursos = cursoRepository.findAllByAtivoTrue(paginacao).map(DadosListagemCursos::new);
         return ResponseEntity.ok(cursos);
     }
 

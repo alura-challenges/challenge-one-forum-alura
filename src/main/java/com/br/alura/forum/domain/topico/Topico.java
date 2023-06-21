@@ -1,14 +1,21 @@
 package com.br.alura.forum.domain.topico;
 
 import com.br.alura.forum.domain.curso.Curso;
+import com.br.alura.forum.domain.curso.CursoRepository;
+import com.br.alura.forum.domain.usuario.UsuarioRepository;
 import com.br.alura.forum.modelo.StatusTopico;
 import com.br.alura.forum.domain.usuario.Usuario;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "Topico")
 @Table(name = "topicos")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Topico {
 
 	@Id
@@ -18,19 +25,24 @@ public class Topico {
 	private String mensagem;
 	private LocalDateTime dataCriacao = LocalDateTime.now();
 	@Enumerated(value = EnumType.STRING)
-	private StatusTopico status = StatusTopico.NAO_RESPONDIDO;
+	private StatusTopico status;
 	@ManyToOne
 	@JoinColumn(name = "autor_id")
 	private Usuario autor;
 	@ManyToOne
 	@JoinColumn(name = "curso_id")
 	private Curso curso;
+	private boolean ativo;
 //	private List<Resposta> respostas = new ArrayList<>();
 
-	public Topico(String titulo, String mensagem, Curso curso) {
-		this.titulo = titulo;
-		this.mensagem = mensagem;
-		this.curso = curso;
+	public Topico(DadosCadastroTopico dados){
+		this.titulo = dados.titulo();
+		this.mensagem = dados.mensagem();
+		this.dataCriacao = LocalDateTime.now();
+		this.status = StatusTopico.NAO_RESPONDIDO;
+		this.autor = new Usuario(dados.autor());
+		this.curso = new Curso(dados.curso());
+		this.ativo = true;
 	}
 
 	@Override
@@ -114,7 +126,34 @@ public class Topico {
 		this.curso = curso;
 	}
 
-//	public List<Resposta> getRespostas() {
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public void atualiza(DadosAtualizacaoTopico dados){
+		if(dados.titulo() != null){
+			this.titulo = dados.titulo();
+		}
+		if(dados.mensagem() != null){
+			this.mensagem = dados.mensagem();
+		}
+		if(dados.autor() != null){
+			this.autor.atualizar(dados.autor());
+		}
+		if(dados.curso() != null){
+			this.curso.atualizar(dados.curso());
+		}
+	}
+
+	public void exclui(){
+		this.ativo = false;
+	}
+
+	//	public List<Resposta> getRespostas() {
 //		return respostas;
 //	}
 

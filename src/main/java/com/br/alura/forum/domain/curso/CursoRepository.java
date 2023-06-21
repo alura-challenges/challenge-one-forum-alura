@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> {
     Page<Curso> findAllByAtivoTrue(Pageable paginacao);
+    Curso findByNomeAndCategoria(String nome, String categoria);
 }
