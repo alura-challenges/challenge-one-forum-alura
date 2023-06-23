@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -20,18 +22,29 @@ public class CursoController {
     private CursoRepository cursoRepository;
     @PostMapping
     @Transactional
-    public ResponseEntity<DadosDetalhamentoCurso> cadastrar(@RequestBody @Valid DadosCadastroCurso dadosCadastroCurso, UriComponentsBuilder uriBuilder){
-        var curso = new Curso(dadosCadastroCurso);
-        cursoRepository.save(curso);
-        var uri = uriBuilder.path("cursos/{id}").buildAndExpand(curso.getId()).toUri();
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroCurso dadosCadastroCurso, UriComponentsBuilder uriBuilder){
+        if (cursoRepository.findByNomeAndCategoria(dadosCadastroCurso.nome(), dadosCadastroCurso.categoria()) == null){
+            var curso = new Curso(dadosCadastroCurso);
+            cursoRepository.save(curso);
+            var uri = uriBuilder.path("cursos/{id}").buildAndExpand(curso.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoCurso(curso));
+            return ResponseEntity.created(uri).body(new DadosDetalhamentoCurso(curso));
+        }
+        return ResponseEntity.badRequest().body("Curso duplicado!");
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemCursos>> listar(@PageableDefault(page = 0, size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao){
-        var cursos = cursoRepository.findAllByAtivoTrue(paginacao).map(DadosListagemCursos::new);
-        return ResponseEntity.ok(cursos);
+    public ResponseEntity<Page<DadosListagemCursos>> listar(@RequestParam(required = false) String categoria,
+            @PageableDefault(page = 0, size = 10, sort = {"nome"}, direction = Sort.Direction.ASC) Pageable paginacao){
+        Page<Curso> paginaCursos;
+
+        if(categoria != null){
+            paginaCursos = cursoRepository.findAllByAtivoTrueAndCategoria(categoria, paginacao);
+        }
+        else{
+            paginaCursos = cursoRepository.findAllByAtivoTrue(paginacao);
+        }
+        return ResponseEntity.ok(paginaCursos.map(DadosListagemCursos::new));
     }
 
     @GetMapping("/{id}")
