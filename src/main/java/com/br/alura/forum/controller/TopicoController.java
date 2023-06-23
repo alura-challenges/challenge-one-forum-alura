@@ -1,6 +1,8 @@
 package com.br.alura.forum.controller;
 
+import com.br.alura.forum.domain.curso.Curso;
 import com.br.alura.forum.domain.curso.CursoRepository;
+import com.br.alura.forum.domain.curso.DadosCadastroCurso;
 import com.br.alura.forum.domain.curso.DadosDetalhamentoCurso;
 import com.br.alura.forum.domain.topico.*;
 import com.br.alura.forum.domain.usuario.UsuarioRepository;
@@ -16,6 +18,10 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/topicos")
@@ -52,9 +58,35 @@ public class TopicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemTopicos>> listar(@PageableDefault(page = 0, size = 10, direction = Sort.Direction.DESC, sort = {"dataCriacao"}) Pageable paginacao) {
-        var topicos = topicoRepository.findAllByAtivoTrue(paginacao);
-        return ResponseEntity.ok(topicos.map(DadosListagemTopicos::new));
+    public ResponseEntity<Page<DadosListagemTopicos>> listar(@RequestParam(required = false) String nomeCurso,
+                                                             @RequestParam(required = false) String anoCriacao,
+                                                             @PageableDefault(page = 0, size = 10, direction = Sort.Direction.DESC, sort = {"dataCriacao"}) Pageable paginacao) {
+        Page<Topico> paginaTopicos;
+        int year = 0;
+
+        if(anoCriacao != null){
+            if(!Pattern.matches("\\d{4}", anoCriacao)){
+                return ResponseEntity.badRequest().build();
+            }
+            year = Integer.parseInt(anoCriacao);
+        }
+        LocalDateTime dataInicio = LocalDateTime.of(year, Month.JANUARY, 1, 0, 0);
+        LocalDateTime dataFim = LocalDateTime.of(year, Month.DECEMBER, 31, 0,0);
+
+        if((nomeCurso != null) && (anoCriacao != null)){
+            paginaTopicos = topicoRepository.findAllByAtivoTrueAndCursoNomeAndDataCriacaoBetween(nomeCurso, dataInicio, dataFim, paginacao);
+        }
+        else if(nomeCurso != null){
+            paginaTopicos = topicoRepository.findAllByAtivoTrueAndCursoNome(nomeCurso, paginacao);
+        }
+        else if(anoCriacao != null){
+            paginaTopicos = topicoRepository.findAllByAtivoTrueAndDataCriacaoBetween(dataInicio, dataFim, paginacao);
+        }
+
+        else{
+            paginaTopicos = topicoRepository.findAllByAtivoTrue(paginacao);
+        }
+        return ResponseEntity.ok(paginaTopicos.map(DadosListagemTopicos::new));
     }
 
     @GetMapping("/{id}")
