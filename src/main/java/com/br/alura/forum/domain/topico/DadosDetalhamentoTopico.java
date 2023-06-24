@@ -1,12 +1,7 @@
 package com.br.alura.forum.domain.topico;
 
-import com.br.alura.forum.domain.curso.Curso;
-import com.br.alura.forum.domain.curso.DadosDetalhamentoCurso;
 import com.br.alura.forum.domain.curso.DadosListagemCursos;
-import com.br.alura.forum.domain.usuario.DadosDetalhamentoUsuario;
 import com.br.alura.forum.domain.usuario.DadosListagemUsuarios;
-import com.br.alura.forum.domain.usuario.Usuario;
-import com.br.alura.forum.modelo.StatusTopico;
 
 import java.time.LocalDateTime;
 

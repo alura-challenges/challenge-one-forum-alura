@@ -1,14 +1,10 @@
 package com.br.alura.forum.domain.topico;
 
 import com.br.alura.forum.domain.curso.Curso;
-import com.br.alura.forum.domain.curso.CursoRepository;
-import com.br.alura.forum.domain.usuario.UsuarioRepository;
-import com.br.alura.forum.modelo.StatusTopico;
 import com.br.alura.forum.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
