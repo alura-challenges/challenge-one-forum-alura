@@ -29,11 +29,20 @@ public class RespostaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DadosDetalhamentoResposta> cadastrar(@RequestBody DadosCadastroResposta dados, UriComponentsBuilder uriBuilder){
+    public ResponseEntity cadastrar(@RequestBody DadosCadastroResposta dados, UriComponentsBuilder uriBuilder){
         var autor = usuarioRepository.getReferenceById(dados.autor());
         var topico = topicoRepository.getReferenceById(dados.topico());
+
+        if (topico.getStatus() == StatusTopico.FECHADO){
+            return ResponseEntity.badRequest().body("Tópico fechado! Não é possível enviar respostas.");
+        }
+
         var resposta = new Resposta(dados, autor, topico);
         respostaRepository.save(resposta);
+
+        if(topico.getStatus() == StatusTopico.NAO_RESPONDIDO){
+            topico.setStatus(StatusTopico.NAO_SOLUCIONADO);
+        }
 
         var uri = uriBuilder.path("/respostas/{id}").buildAndExpand(resposta.getId()).toUri();
 
@@ -56,7 +65,6 @@ public class RespostaController {
             return ResponseEntity.badRequest().build();
         }
 
-
         if((autorId != null) && (topicoId != null)){
             var buscaAutor = usuarioRepository.getReferenceById(Long.parseLong(autorId));
             var buscaTopico = topicoRepository.getReferenceById(Long.parseLong(topicoId));
@@ -74,4 +82,28 @@ public class RespostaController {
         }
         return ResponseEntity.ok(paginaRespostas.map(DadosListagemRespostas::new));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosDetalhamentoResposta> detalhar(@PathVariable Long id){
+        var resposta = respostaRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoResposta(resposta));
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<DadosDetalhamentoResposta> atualizar(@RequestBody DadosAtualizacaoResposta dados){
+        var resposta = respostaRepository.getReferenceById(dados.id());
+        resposta.atualizar(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoResposta(resposta));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity deletar(@PathVariable Long id){
+        var resposta = respostaRepository.getReferenceById(id);
+        resposta.excluir();
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

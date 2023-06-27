@@ -117,4 +117,14 @@ public class Resposta {
 	public void setAtivo(Boolean ativo) {
 		this.ativo = ativo;
 	}
+
+	public void atualizar(DadosAtualizacaoResposta dados) {
+		if(dados.mensagem() != null){
+			this.mensagem = dados.mensagem();
+		}
+	}
+
+	public void excluir() {
+		this.ativo = false;
+	}
 }
