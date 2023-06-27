@@ -9,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RespostaRepository extends JpaRepository<Resposta, Long> {
     Page<Resposta> findAllByAtivoTrue(Pageable paginacao);
     Page<Resposta> findAllByAtivoTrueAndAutorAndTopico(Usuario autor, Topico topico, Pageable paginacao);
+    Page<Resposta> findAllByAtivoTrueAndAutor(Usuario autor, Pageable paginacao);
+    Page<Resposta> findAllByAtivoTrueAndTopico(Topico topico, Pageable paginacao);
 }

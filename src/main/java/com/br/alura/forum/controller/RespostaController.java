@@ -40,32 +40,38 @@ public class RespostaController {
         return ResponseEntity.created(uri).body(new DadosDetalhamentoResposta(resposta));
     }
 
-    /*@GetMapping
+    @GetMapping
     public ResponseEntity<Page<DadosListagemRespostas>> listar(
-            @RequestParam(required = false) String autor,
-            @RequestParam(required = false) String topico,
+            @RequestParam(required = false) String autorId,
+            @RequestParam(required = false) String topicoId,
             @PageableDefault(page = 0, size = 10, direction = Sort.Direction.DESC, sort = {"dataCriacao"})Pageable paginacao){
-        Long autorId;
-        Long topicoId;
+
         Page<Resposta> paginaRespostas;
 
-        if((autor != null) && !Pattern.matches("\\d", autor)){
+        if((autorId != null) && !Pattern.matches("\\d", autorId)) {
             return ResponseEntity.badRequest().build();
         }
-        autorId = Long.parseLong(autor);
-        if((topico != null) && Pattern.matches("\\d", topico)){
+
+        if((topicoId != null) && !Pattern.matches("\\d", topicoId)) {
             return ResponseEntity.badRequest().build();
         }
-        topicoId = Long.parseLong(topico);
 
-        if((autor != null) && (topico != null)){
-            var autor = usuarioRepository.getReferenceById(autorId);
 
-            paginaRespostas = respostaRepository.
+        if((autorId != null) && (topicoId != null)){
+            var buscaAutor = usuarioRepository.getReferenceById(Long.parseLong(autorId));
+            var buscaTopico = topicoRepository.getReferenceById(Long.parseLong(topicoId));
+
+            paginaRespostas = respostaRepository.findAllByAtivoTrueAndAutorAndTopico(buscaAutor, buscaTopico, paginacao);
+        } else if(autorId != null){
+            var buscaAutor = usuarioRepository.getReferenceById(Long.parseLong(autorId));
+            paginaRespostas = respostaRepository.findAllByAtivoTrueAndAutor(buscaAutor, paginacao);
+        } else if(topicoId != null){
+            var buscaTopico = topicoRepository.getReferenceById(Long.parseLong(topicoId));
+            paginaRespostas = respostaRepository.findAllByAtivoTrueAndTopico(buscaTopico, paginacao);
         }
-
-
-        var respostas = respostaRepository.findAllByAtivoTrue(paginacao);
-        return ResponseEntity.ok(respostas.map(DadosListagemRespostas::new));
-    }*/
+        else{
+            paginaRespostas = respostaRepository.findAllByAtivoTrue(paginacao);
+        }
+        return ResponseEntity.ok(paginaRespostas.map(DadosListagemRespostas::new));
+    }
 }
