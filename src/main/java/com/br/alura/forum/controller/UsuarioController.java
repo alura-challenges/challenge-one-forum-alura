@@ -9,8 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.security.KeyStore;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -22,7 +27,10 @@ public class UsuarioController {
     @PostMapping
     @Transactional
     public ResponseEntity<DadosDetalhamentoUsuario> cadastrar(@RequestBody @Valid DadosCadastroUsuario dadosCadastroUsuario, UriComponentsBuilder uriBuilder){
+
+        var senhaCriptografada = new BCryptPasswordEncoder().encode(dadosCadastroUsuario.senha());
         var usuario = new Usuario(dadosCadastroUsuario);
+        usuario.setSenha(senhaCriptografada);
         usuarioRepository.save(usuario);
         var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
 

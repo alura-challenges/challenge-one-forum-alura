@@ -41,11 +41,11 @@ public class TopicoController {
 
         if(topicoRepository.findByTituloAndMensagem(dados.titulo(), dados.mensagem()) == null){
 
-            var autor = usuarioRepository.findByEmail(dados.autor().email());
+            var autor = usuarioRepository.getReferenceById(dados.autor());
 
             var curso = cursoRepository.findByNomeAndCategoria(dados.curso().nome(), dados.curso().categoria());
 
-            var topico = new Topico(dados);
+            var topico = new Topico(dados, autor);
             topico.setAutor(autor);
             topico.setCurso(curso);
             topicoRepository.save(topico);

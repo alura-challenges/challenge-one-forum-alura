@@ -16,7 +16,7 @@ public record DadosCadastroTopico(
         @NotBlank
         String mensagem,
         @NotNull
-        DadosCadastroUsuario autor,
+        Long autor,
         @NotNull
         DadosCadastroCurso curso) {
 }

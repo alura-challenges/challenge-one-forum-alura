@@ -31,12 +31,12 @@ public class Topico {
 	private boolean ativo;
 //	private List<Resposta> respostas = new ArrayList<>();
 
-	public Topico(DadosCadastroTopico dados){
+	public Topico(DadosCadastroTopico dados, Usuario autor){
 		this.titulo = dados.titulo();
 		this.mensagem = dados.mensagem();
 		this.dataCriacao = LocalDateTime.now();
 		this.status = StatusTopico.NAO_RESPONDIDO;
-		this.autor = new Usuario(dados.autor());
+		this.autor = autor;
 		this.curso = new Curso(dados.curso());
 		this.ativo = true;
 	}
