@@ -36,6 +36,9 @@ public class SecurityConfigurations {
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/topicos", "/cursos", "/respostas").permitAll()
+                .requestMatchers(HttpMethod.DELETE).hasRole("MODERADOR")
+                .requestMatchers("/usuarios").hasRole("MODERADOR")
+                .requestMatchers(HttpMethod.PUT, "/topicos/{id}/*").hasRole("MODERADOR")
                 .anyRequest().authenticated()
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

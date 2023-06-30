@@ -91,8 +91,11 @@ public class RespostaController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity<DadosDetalhamentoResposta> atualizar(@RequestBody DadosAtualizacaoResposta dados){
+    public ResponseEntity atualizar(@RequestBody DadosAtualizacaoResposta dados){
         var resposta = respostaRepository.getReferenceById(dados.id());
+        if(resposta.getTopico().getStatus() == StatusTopico.FECHADO){
+            return ResponseEntity.badRequest().body("Tópico fechado! Não é possível editar a Resposta.");
+        }
         resposta.atualizar(dados);
         return ResponseEntity.ok(new DadosDetalhamentoResposta(resposta));
     }

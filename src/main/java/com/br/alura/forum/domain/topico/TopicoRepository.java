@@ -1,7 +1,5 @@
 package com.br.alura.forum.domain.topico;
 
-import com.br.alura.forum.domain.curso.Curso;
-import com.br.alura.forum.domain.curso.DadosCadastroCurso;
 import com.br.alura.forum.domain.topico.Topico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

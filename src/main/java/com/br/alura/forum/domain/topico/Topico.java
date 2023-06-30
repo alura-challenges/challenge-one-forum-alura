@@ -149,6 +149,18 @@ public class Topico {
 		this.ativo = false;
 	}
 
+	public void resolver(){
+		this.status = StatusTopico.SOLUCIONADO;
+	}
+
+	public void fechar() {
+		this.status = StatusTopico.FECHADO;
+	}
+
+	public void responder() {
+		this.status = StatusTopico.NAO_SOLUCIONADO;
+	}
+
 	//	public List<Resposta> getRespostas() {
 //		return respostas;
 //	}

@@ -3,8 +3,6 @@ package com.br.alura.forum.domain.curso;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 @Entity(name = "Curso")
 @Table(name = "cursos")

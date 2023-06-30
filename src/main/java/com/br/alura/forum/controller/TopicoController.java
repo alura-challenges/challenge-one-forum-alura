@@ -1,9 +1,6 @@
 package com.br.alura.forum.controller;
 
-import com.br.alura.forum.domain.curso.Curso;
 import com.br.alura.forum.domain.curso.CursoRepository;
-import com.br.alura.forum.domain.curso.DadosCadastroCurso;
-import com.br.alura.forum.domain.curso.DadosDetalhamentoCurso;
 import com.br.alura.forum.domain.topico.*;
 import com.br.alura.forum.domain.usuario.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -13,8 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -99,12 +94,40 @@ public class TopicoController {
     @Transactional
     public ResponseEntity atualizar(@RequestBody DadosAtualizacaoTopico dados){
         var topico = topicoRepository.getReferenceById(dados.id());
+        if(topico.getStatus() == StatusTopico.FECHADO){
+            return ResponseEntity.badRequest().body("Tópico fechado! Não é possível editar o Tópico.");
+        }
+
         if((topicoRepository.findByTituloAndMensagem(dados.titulo(), dados.mensagem()) == null) ||
         (topicoRepository.findByTituloAndMensagem(dados.titulo(), dados.mensagem())) == topico){
             topico.atualiza(dados);
             return ResponseEntity.ok().body(new DadosDetalhamentoTopico(topico));
         }
         return ResponseEntity.badRequest().body("Tópicos replicados!");
+    }
+
+    @PutMapping("/{id}/resolver")
+    @Transactional
+    public ResponseEntity resolverTopico(@PathVariable Long id){
+        var topico = topicoRepository.getReferenceById(id);
+        topico.resolver();
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/fechar")
+    @Transactional
+    public ResponseEntity fecharTopico(@PathVariable Long id){
+        var topico = topicoRepository.getReferenceById(id);
+        topico.fechar();
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/responder")
+    @Transactional
+    public ResponseEntity responderTopico(@PathVariable Long id){
+        var topico = topicoRepository.getReferenceById(id);
+        topico.responder();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
