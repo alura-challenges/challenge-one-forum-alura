@@ -104,8 +104,8 @@ Em seguida, clique no botão <em>Browse</em> e busque o projeto no diretório lo
 
 1. Publique seu projeto no GitHub;
 2. Utilize o tópico:
-   - Turma 4: **challengeforumalura5**;
-   - Vá na aba "`Sobre`" ou "`About`" do seu projeto, no menu lateral que fica na esquerda, dentro do repositório no GitHub e Adicione a tag "**challengeforumalura4**".
+   - Turma 5: **challengeforumalura5**;
+   - Vá na aba "`Sobre`" ou "`About`" do seu projeto, no menu lateral que fica na esquerda, dentro do repositório no GitHub e Adicione a tag "**challengeforumalura5**".
 
 ![11 gif - github](https://user-images.githubusercontent.com/78982435/209682261-a06b735c-0752-48ad-bbd3-5784e4f6d7ef.gif)
 
