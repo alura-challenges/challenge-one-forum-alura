@@ -19,7 +19,7 @@
 ### Tecnologias utilizadas:
 
 - [Eclipse](https://www.eclipse.org/)
-- [MySql](https://www.mysql.com/)
+- [MySQL](https://www.mysql.com/)
 - [Java](https://www.java.com/pt-BR/)
 - [Spring Security](https://start.spring.io/)
 - [Token JWT](https://jwt.io/)
@@ -102,12 +102,7 @@ Em seguida, clique no botão <em>Browse</em> e busque o projeto no diretório lo
 
 ## 🚧Como listar o meu projeto neste Challenge?
 
-1. Publique seu projeto no GitHub;
-2. Utilize o tópico:
-   - Turma 5: **challengeforumalura5**;
-   - Vá na aba "`Sobre`" ou "`About`" do seu projeto, no menu lateral que fica na esquerda, dentro do repositório no GitHub e Adicione a tag "**challengeforumalura5**".
-
-![11 gif - github](https://user-images.githubusercontent.com/78982435/209682261-a06b735c-0752-48ad-bbd3-5784e4f6d7ef.gif)
+Publique seu projeto no GitHub;
 
 ## 📬Como realizar a entrega final do meu projeto?
 
